@@ -15,7 +15,7 @@ A modular hybrid AI ecosystem for Windows 11 using PowerShell 7, Gemini API, and
 
 ## 📸 Visión General
 
-![Terminal Dashboard](./docs/terminal-dashboard.jpg)
+![Terminal Dashboard](./assets/Captura de pantalla 2025-12-11 230241.png)
 *Panel de control v2.0 con "Lazy Loading" activo: Tiempo de carga < 1s.*
 
 Este proyecto nace de una necesidad crítica detectada durante el desarrollo de sistemas RAG (Retrieval-Augmented Generation): **La gestión eficiente del contexto y los recursos.** En lugar de depender únicamente de soluciones en la nube o saturar la RAM local, este ecosistema implementa una **Arquitectura Híbrida** que decide dinámicamente dónde ejecutar cada tarea.
