@@ -15,7 +15,7 @@ A modular hybrid AI ecosystem for Windows 11 using PowerShell 7, Gemini API, and
 
 ## 📸 Visión General
 
-![Terminal Dashboard](./assets/Captura de pantalla 2025-12-11 230241.png)
+![Terminal Dashboard](./assets/Terminal-v2.0.png)
 *Panel de control v2.0 con "Lazy Loading" activo: Tiempo de carga < 1s.*
 
 Este proyecto nace de una necesidad crítica detectada durante el desarrollo de sistemas RAG (Retrieval-Augmented Generation): **La gestión eficiente del contexto y los recursos.** En lugar de depender únicamente de soluciones en la nube o saturar la RAM local, este ecosistema implementa una **Arquitectura Híbrida** que decide dinámicamente dónde ejecutar cada tarea.
@@ -26,7 +26,7 @@ Este proyecto nace de una necesidad crítica detectada durante el desarrollo de 
 
 El sistema opera bajo una filosofía de **Memoria Jerárquica** y ejecución distribuida.
 
-![Diagrama de Arquitectura](./assets/Terminal-v2.0.png)
+![Diagrama de Arquitectura](./assets/diagram-export-11-12-2025-10_46_30-p.m..png)
 
 ### 1. Capa Local (Edge AI)
 Aprovechando el hardware dedicado de una **Acer Predator Helios Neo**:
