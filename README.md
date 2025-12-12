@@ -26,7 +26,7 @@ Este proyecto nace de una necesidad crítica detectada durante el desarrollo de 
 
 El sistema opera bajo una filosofía de **Memoria Jerárquica** y ejecución distribuida.
 
-![Diagrama de Arquitectura](./assets/diagram-export-11-12-2025-10_46_30-p.m..png)
+![Diagrama de Arquitectura](./assets/Terminal-v2.0.png)
 
 ### 1. Capa Local (Edge AI)
 Aprovechando el hardware dedicado de una **Acer Predator Helios Neo**:
