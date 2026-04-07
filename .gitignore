@@ -1,37 +1,43 @@
-# --- SEGURIDAD Y SECRETOS (¡Muy Importante!) ---
+# win11-ai-orchestrator - Git Ignore Stricto
+# Bloqueo de Datos Sensibles y Basura Técnica
+
+# Datos y Bases de Datos
+**/DataBases/
+**/*.db
+**/*.sqlite
+**/*.vector
+**/*.rag_cache/
+**/*.chroma/
+
+# Secretos y Configuración Local
 .env
 .env.local
-*.pem
-*.key
-key.json
-secrets.json
-gcp_credentials.json
-token.json
-client_secret*.json
+.env.*.local
+**/*.xml
+**/*.json
+!package.json
+!tsconfig.json
+!composer.json
+!requirements.json
+!settings.json.example
 
-# --- PowerShell ---
-# Módulos instalados localmente que no deben subirse
-Modules/
-*.psm1.lock
-
-# --- Python (Si usas scripts de Python para conectar con Vertex AI) ---
+# Basura de Python/Node
 __pycache__/
-*.pyc
-venv/
-env/
+*.py[cod]
+*$py.class
+node_modules/
+dist/
+build/
+.conda/
 .venv/
-*.egg-info/
 
-# --- Windows y Sistema ---
-Thumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# --- Editores de Código (Opcional) ---
-.vscode/
-.idea/
-
-# --- Logs y Salidas Temporales ---
+# Logs y Temporales
 *.log
-temp/
-output/
+**/logs/
+.gemini_temp/
+.qwen/
+.vscode/
+
+# Ecosistema (Protección de Origen)
+**/Config/PowerShell/backups/
+**/Config/env-vars/
