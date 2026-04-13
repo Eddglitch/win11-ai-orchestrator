@@ -39,8 +39,3 @@ if (Test-Path $condaHook) { . $condaHook }
 if (Get-Command starship -ErrorAction SilentlyContinue) {
     Invoke-Expression (&starship init powershell)
 }
-
-# DESTRELLO AZUL (PULSE) - DESACTIVADO TEMPORALMENTE (Evitar Factory Resets)
-# if (Get-Command Set-GeminiGreeting -ErrorAction SilentlyContinue) {
-#    Set-GeminiGreeting
-# }
