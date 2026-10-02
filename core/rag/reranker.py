@@ -34,7 +34,7 @@ class OllamaReranker:
         }
         
         try:
-            response = requests.post(self.endpoint, json=payload)
+            response = requests.post(self.endpoint, json=payload, timeout=30)
             score_text = response.json().get("response", "0").strip()
             # Sanitización de salida del modelo local
             score = float(''.join(c for c in score_text if c.isdigit() or c == '.'))
