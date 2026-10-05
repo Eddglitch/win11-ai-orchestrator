@@ -1,10 +1,5 @@
 import unittest
 from unittest.mock import patch, MagicMock
-import sys
-
-# Mocking requests because it's not installed in the environment
-mock_requests = MagicMock()
-sys.modules["requests"] = mock_requests
 
 from core.rag.reranker import OllamaReranker
 
