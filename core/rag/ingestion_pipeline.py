@@ -8,6 +8,9 @@ class IngestionPipeline:
     Encargado de transformar archivos brutos en fragmentos de conocimiento estructurado.
     """
 
+    # Pre-compile regex for performance
+    _BLANK_LINE_REGEX = re.compile(r'\n\s*\n')
+
     def __init__(self, chunk_size: int = 1500, chunk_overlap: int = 150):
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
@@ -18,7 +21,7 @@ class IngestionPipeline:
         """
         if extension in ['.py', '.js', '.ts', '.ps1']:
             # Normalización de espacios y remoción de comentarios excesivos
-            text = re.sub(r'\n\s*\n', '\n\n', text)
+            text = self._BLANK_LINE_REGEX.sub('\n\n', text)
         return text.strip()
 
     def get_metadata(self, file_path: str) -> Dict:
