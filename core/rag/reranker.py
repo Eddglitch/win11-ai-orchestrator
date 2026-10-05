@@ -32,6 +32,7 @@ class OllamaReranker:
         payload = {"model": self.model, "prompt": prompt, "stream": False}
 
         try:
+            response = requests.post(self.endpoint, json=payload, timeout=10)
             response = requests.post(self.endpoint, json=payload, timeout=30)
             score_text = response.json().get("response", "0").strip()
             # Sanitización de salida del modelo local
