@@ -11,6 +11,7 @@ class IngestionPipeline:
     def __init__(self, chunk_size: int = 1500, chunk_overlap: int = 150):
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
+        self.dev_home = os.getenv("DEV_HOME", ".")
 
     def clean_content(self, text: str, extension: str) -> str:
         """
@@ -26,7 +27,7 @@ class IngestionPipeline:
         Extrae la 'Memoria Espacial' del archivo (Niveles de importancia).
         """
         # Sanitización de rutas locales en metadata
-        relative_path = os.path.relpath(file_path, start=os.getenv("DEV_HOME", "."))
+        relative_path = os.path.relpath(file_path, start=self.dev_home)
         
         return {
             "source": relative_path,
