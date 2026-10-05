@@ -49,6 +49,8 @@ class IngestionPipeline:
         """
         # Lógica de chunking semántico simplificada
         chunks = []
+        if not text:
+            return chunks
         for i in range(0, len(text), self.chunk_size - self.chunk_overlap):
             chunk_content = text[i:i + self.chunk_size]
             chunks.append({
@@ -56,4 +58,6 @@ class IngestionPipeline:
                 "metadata": metadata,
                 "length": len(chunk_content)
             })
+            if i + self.chunk_size >= len(text):
+                break
         return chunks
