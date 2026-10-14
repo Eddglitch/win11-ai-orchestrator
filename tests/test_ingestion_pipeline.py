@@ -31,10 +31,10 @@ class TestIngestionPipeline(unittest.TestCase):
         self.assertEqual(self.pipeline.clean_content("", ".py"), "")
         self.assertEqual(self.pipeline.clean_content("   ", ".py"), "")
 
-        self.pipeline = IngestionPipeline(chunk_size=10, chunk_overlap=2)
-        self.metadata = {"test": "metadata"}
 
     def test_create_chunks_basic(self):
+        self.pipeline = IngestionPipeline(chunk_size=10, chunk_overlap=2)
+        self.metadata = {"test": "metadata"}
         # chunk_size=10, chunk_overlap=2 -> step = 8
         # "0123456789012345" (16 chars)
         # chunk 1: text[0:10] -> "0123456789"
@@ -49,6 +49,8 @@ class TestIngestionPipeline(unittest.TestCase):
         self.assertEqual(chunks[1]["length"], 8)
 
     def test_create_chunks_overlap(self):
+        self.pipeline = IngestionPipeline(chunk_size=10, chunk_overlap=2)
+        self.metadata = {"test": "metadata"}
         # step = 8
         # "ABCDEFGHIJK" (11 chars)
         # chunk 1: text[0:10] -> "ABCDEFGHIJ"
@@ -141,7 +143,6 @@ if __name__ == '__main__':
     def test_clean_content_whitespace_only(self):
         self.assertEqual(self.pipeline.clean_content("   \n   ", ".js"), "")
         # Set small chunk_size and chunk_overlap to test the logic easily
-        self.pipeline = IngestionPipeline(chunk_size=10, chunk_overlap=2)
         self.metadata = {"source": "test_file.py"}
 
     def test_create_chunks_exact_size(self):

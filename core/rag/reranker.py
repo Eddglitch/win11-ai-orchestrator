@@ -32,14 +32,13 @@ class OllamaReranker:
         payload = {"model": self.model, "prompt": prompt, "stream": False}
 
         try:
-            response = requests.post(self.endpoint, json=payload, timeout=10)
             response = requests.post(self.endpoint, json=payload, timeout=30)
             score_text = response.json().get("response", "0").strip()
             # Sanitización de salida del modelo local
             score = float("".join(c for c in score_text if c.isdigit() or c == "."))
             return score / 10.0
-        except Exception as e:
-            print(f"Error en re-ranking local: {e}")
+        except Exception:
+            print("Error en re-ranking local")
             return 0.5  # Valor neutral en caso de fallo
 
     def rerank(self, query: str, documents: List[Dict], top_n: int = 3) -> List[Dict]:
