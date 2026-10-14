@@ -105,6 +105,46 @@ class TestIngestionPipeline(unittest.TestCase):
         # Actually in Python: None in ['.py'] is False.
         self.assertEqual(self.pipeline.clean_content("  text  ", None), "text")
 
+
+    def test_get_metadata_valid_path(self):
+        # Setup a known DEV_HOME for testing
+        original_dev_home = self.pipeline.dev_home
+        self.pipeline.dev_home = os.path.abspath(".")
+
+        # Test a valid file inside DEV_HOME
+        test_file = os.path.join(self.pipeline.dev_home, "core/rag/ingestion_pipeline.py")
+        metadata = self.pipeline.get_metadata(test_file)
+
+        self.assertEqual(metadata["source"], "core/rag/ingestion_pipeline.py")
+        self.assertEqual(metadata["ecosystem"], "win11-ai-orchestrator")
+
+        # Restore DEV_HOME
+        self.pipeline.dev_home = original_dev_home
+
+    def test_get_metadata_path_traversal(self):
+        # Setup a known DEV_HOME for testing
+        original_dev_home = self.pipeline.dev_home
+        self.pipeline.dev_home = os.path.abspath(".")
+
+        # Test an invalid file outside DEV_HOME using path traversal
+        traversal_file = "../../etc/passwd"
+
+        with self.assertRaises(ValueError) as context:
+            self.pipeline.get_metadata(traversal_file)
+
+        self.assertTrue("Path traversal detected" in str(context.exception))
+
+        # Test an absolute path outside DEV_HOME
+        absolute_file = "/etc/passwd"
+
+        with self.assertRaises(ValueError) as context:
+            self.pipeline.get_metadata(absolute_file)
+
+        self.assertTrue("Path traversal detected" in str(context.exception))
+
+        # Restore DEV_HOME
+        self.pipeline.dev_home = original_dev_home
+
 if __name__ == '__main__':
     def test_clean_content_python_normalization(self):
         text = "def hello():\n\n\n\n    print('world')"
