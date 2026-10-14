@@ -1,5 +1,6 @@
 import os
 import requests
+import urllib.parse
 from typing import List, Dict
 
 
@@ -15,6 +16,10 @@ class OllamaReranker:
         self.endpoint = os.getenv(
             "OLLAMA_ENDPOINT", "http://localhost:11434/api/generate"
         )
+
+        parsed_url = urllib.parse.urlparse(self.endpoint)
+        if parsed_url.hostname not in ("localhost", "127.0.0.1", "::1"):
+            raise ValueError("Invalid endpoint. Only localhost and 127.0.0.1 are allowed for security reasons.")
 
     def score_relevance(self, query: str, context: str) -> float:
         """

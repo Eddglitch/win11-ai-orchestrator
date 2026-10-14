@@ -1,3 +1,4 @@
+import os
 import sys
 from unittest.mock import MagicMock
 
@@ -8,6 +9,7 @@ sys.modules['requests'] = mock_requests
 from core.rag.reranker import OllamaReranker
 
 def test_reranker_timeout():
+    os.environ["OLLAMA_ENDPOINT"] = "http://localhost:11434/api/generate"
     reranker = OllamaReranker()
 
     # Mock the response
@@ -43,6 +45,7 @@ from core.rag.reranker import OllamaReranker
 
 class TestOllamaReranker(unittest.TestCase):
     def setUp(self):
+        os.environ["OLLAMA_ENDPOINT"] = "http://localhost:11434/api/generate"
         self.reranker = OllamaReranker()
 
     @patch("core.rag.reranker.requests.post")
