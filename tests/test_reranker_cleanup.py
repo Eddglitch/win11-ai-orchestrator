@@ -10,6 +10,8 @@ from core.rag.reranker import OllamaReranker
 
 class TestOllamaReranker(unittest.TestCase):
     def setUp(self):
+        import os
+        os.environ["OLLAMA_ENDPOINT"] = "http://localhost:11434/api/generate"
         # Reset mock before each test
         mock_requests.reset_mock()
         mock_requests.post.side_effect = None
