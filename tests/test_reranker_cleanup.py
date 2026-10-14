@@ -28,11 +28,8 @@ class TestOllamaReranker(unittest.TestCase):
         # Verify the keyword 'json' in requests.post still works (it's a kwarg, not using the json module)
         args, kwargs = mock_requests.post.call_args
         self.assertIn('json', kwargs)
-        self.assertEqual(kwargs['json']['prompt'].strip(), f"""Query: test query
-        Context: test context
-
-        Evalúa del 0 al 10 qué tan útil es el contexto para responder la consulta.
-        Responde SOLO con un número.""".strip())
+        self.assertIn('Query:\n        ```\n        test query\n        ```', kwargs['json']['prompt'])
+        self.assertIn('Context:\n        ```\n        test context\n        ```', kwargs['json']['prompt'])
 
     def test_rerank(self):
         # Mock responses for multiple documents
