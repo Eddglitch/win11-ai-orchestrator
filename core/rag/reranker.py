@@ -21,9 +21,20 @@ class OllamaReranker:
         Evalúa la relevancia de un contexto respecto a una consulta.
         Retorna un puntaje de 0.0 a 1.0.
         """
+        # Sanitizar entradas para evitar Prompt Injection
+        safe_query = query.replace("```", " ").replace("<", "&lt;").replace(">", "&gt;")
+        safe_context = context.replace("```", " ").replace("<", "&lt;").replace(">", "&gt;")
+
         prompt = f"""
-        Query: {query}
-        Context: {context}
+        Query:
+        ```
+        {safe_query}
+        ```
+
+        Context:
+        ```
+        {safe_context}
+        ```
         
         Evalúa del 0 al 10 qué tan útil es el contexto para responder la consulta.
         Responde SOLO con un número.
