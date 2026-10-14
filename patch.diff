@@ -1,0 +1,10 @@
+--- core/rag/reranker.py
++++ core/rag/reranker.py
+@@ -34,6 +34,6 @@
+             score = float("".join(c for c in score_text if c.isdigit() or c == "."))
+             return score / 10.0
+-        except Exception as e:
+-            print(f"Error en re-ranking local: {e}")
++        except Exception:
++            print("Error en re-ranking local")
+             return 0.5  # Valor neutral en caso de fallo

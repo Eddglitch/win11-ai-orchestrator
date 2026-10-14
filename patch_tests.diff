@@ -1,0 +1,6 @@
+--- tests/test_ingestion_pipeline.py
++++ tests/test_ingestion_pipeline.py
+@@ -33,2 +33,3 @@
+         self.pipeline = IngestionPipeline(chunk_size=10, chunk_overlap=2)
++    def setUp(self):
+         self.metadata = {"test": "metadata"}
