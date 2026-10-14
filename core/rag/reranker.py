@@ -1,6 +1,7 @@
 import os
 import requests
 from typing import List, Dict
+import concurrent.futures
 
 
 class OllamaReranker:
@@ -45,11 +46,21 @@ class OllamaReranker:
         """
         Ordena los documentos recuperados por relevancia semántica real.
         """
-        scored_docs = []
-        for doc in documents:
+
+        def process_doc(doc):
             score = self.score_relevance(query, doc.get("content", ""))
+            # We copy the dictionary to avoid mutating the input while iterating concurrently
+            # or we can mutate it as in the original code, but copying is safer. Let's just mutate since original mutated.
             doc["rerank_score"] = score
-            scored_docs.append(doc)
+            return doc
+
+        scored_docs = []
+        if documents:
+            max_workers = min(10, len(documents))
+            with concurrent.futures.ThreadPoolExecutor(
+                max_workers=max_workers
+            ) as executor:
+                scored_docs = list(executor.map(process_doc, documents))
 
         # Ordenar descendente por el nuevo score de re-ranking
         return sorted(scored_docs, key=lambda x: x["rerank_score"], reverse=True)[
