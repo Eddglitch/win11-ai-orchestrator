@@ -1,6 +1,5 @@
 # $env:DEV_HOME\Config\PowerShell\profile_loader.ps1
 # MASTER PROFILE LOADER v4.2 - PULSE EDITION
-$env:DEV_HOME = "$env:DEV_HOME"
 $env:DEV_CONFIG_PS = "$env:DEV_HOME\Config\PowerShell"
 
 # 1. FUNCIÓN REFRESH INDEPENDIENTE
