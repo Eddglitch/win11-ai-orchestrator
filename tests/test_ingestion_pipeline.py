@@ -222,5 +222,46 @@ if __name__ == '__main__':
         pipeline = IngestionPipeline()
         self.assertEqual(pipeline.clean_content(text, ".txt"), "some content")
 
+
+    def test_get_metadata_global_importance(self):
+        """Test metadata extraction for global level files (GEMINI.md)."""
+        import os
+        pipeline = IngestionPipeline()
+        # Set a fixed dev_home for consistent testing
+        pipeline.dev_home = "/mock/dev/home"
+        file_path = "/mock/dev/home/docs/GEMINI.md"
+
+        metadata = pipeline.get_metadata(file_path)
+
+        self.assertEqual(metadata["importance"], 0)
+        self.assertEqual(metadata["ecosystem"], "win11-ai-orchestrator")
+        self.assertEqual(metadata["source"], os.path.join("docs", "GEMINI.md"))
+
+    def test_get_metadata_ecosystem_importance(self):
+        """Test metadata extraction for ecosystem level files (core/)."""
+        import os
+        pipeline = IngestionPipeline()
+        pipeline.dev_home = "/mock/dev/home"
+        file_path = "/mock/dev/home/core/some_module.py"
+
+        metadata = pipeline.get_metadata(file_path)
+
+        self.assertEqual(metadata["importance"], 1)
+        self.assertEqual(metadata["ecosystem"], "win11-ai-orchestrator")
+        self.assertEqual(metadata["source"], os.path.join("core", "some_module.py"))
+
+    def test_get_metadata_operational_importance(self):
+        """Test metadata extraction for operational level files."""
+        import os
+        pipeline = IngestionPipeline()
+        pipeline.dev_home = "/mock/dev/home"
+        file_path = "/mock/dev/home/scripts/utility.ps1"
+
+        metadata = pipeline.get_metadata(file_path)
+
+        self.assertEqual(metadata["importance"], 3)
+        self.assertEqual(metadata["ecosystem"], "win11-ai-orchestrator")
+        self.assertEqual(metadata["source"], os.path.join("scripts", "utility.ps1"))
+
 if __name__ == "__main__":
     unittest.main()
