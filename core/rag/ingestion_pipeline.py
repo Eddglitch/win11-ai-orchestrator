@@ -8,6 +8,8 @@ class IngestionPipeline:
     Encargado de transformar archivos brutos en fragmentos de conocimiento estructurado.
     """
 
+    # Pre-compile regex for performance
+    _BLANK_LINE_REGEX = re.compile(r'\n\s*\n')
     # Normalización de espacios y remoción de comentarios excesivos
     _RE_CLEAN = re.compile(r'\n\s*\n')
 
@@ -21,6 +23,8 @@ class IngestionPipeline:
         Limpia el contenido según el lenguaje (sanitización de ruido).
         """
         if extension in ['.py', '.js', '.ts', '.ps1']:
+            # Normalización de espacios y remoción de comentarios excesivos
+            text = self._BLANK_LINE_REGEX.sub('\n\n', text)
             text = self._RE_CLEAN.sub('\n\n', text)
         return text.strip()
 
