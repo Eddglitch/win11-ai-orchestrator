@@ -8,17 +8,20 @@ class IngestionPipeline:
     Encargado de transformar archivos brutos en fragmentos de conocimiento estructurado.
     """
 
+    # Normalización de espacios y remoción de comentarios excesivos
+    _RE_CLEAN = re.compile(r'\n\s*\n')
+
     def __init__(self, chunk_size: int = 1500, chunk_overlap: int = 150):
         self.chunk_size = chunk_size
         self.chunk_overlap = chunk_overlap
+        self.dev_home = os.getenv("DEV_HOME", ".")
 
     def clean_content(self, text: str, extension: str) -> str:
         """
         Limpia el contenido según el lenguaje (sanitización de ruido).
         """
         if extension in ['.py', '.js', '.ts', '.ps1']:
-            # Normalización de espacios y remoción de comentarios excesivos
-            text = re.sub(r'\n\s*\n', '\n\n', text)
+            text = self._RE_CLEAN.sub('\n\n', text)
         return text.strip()
 
     def get_metadata(self, file_path: str) -> Dict:
@@ -26,7 +29,7 @@ class IngestionPipeline:
         Extrae la 'Memoria Espacial' del archivo (Niveles de importancia).
         """
         # Sanitización de rutas locales en metadata
-        relative_path = os.path.relpath(file_path, start=os.getenv("DEV_HOME", "."))
+        relative_path = os.path.relpath(file_path, start=self.dev_home)
         
         return {
             "source": relative_path,
@@ -49,6 +52,8 @@ class IngestionPipeline:
         """
         # Lógica de chunking semántico simplificada
         chunks = []
+        if not text:
+            return chunks
         for i in range(0, len(text), self.chunk_size - self.chunk_overlap):
             chunk_content = text[i:i + self.chunk_size]
             chunks.append({
@@ -56,4 +61,6 @@ class IngestionPipeline:
                 "metadata": metadata,
                 "length": len(chunk_content)
             })
+            if i + self.chunk_size >= len(text):
+                break
         return chunks

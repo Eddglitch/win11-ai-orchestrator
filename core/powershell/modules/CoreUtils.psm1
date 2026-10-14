@@ -72,4 +72,3 @@ function Global:Get-GeminiHelp {
 }
 
 Export-ModuleMember -Function Get-GeminiHelp
-$aliasContent
